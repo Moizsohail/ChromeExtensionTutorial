@@ -17,7 +17,7 @@ const config = [
       name: "content",
       format: "iife",
     },
-    plugins: [typescript()],
+    plugins: [nodeResolve(), typescript()],
   },
 ];
 export default config;
