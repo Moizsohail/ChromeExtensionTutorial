@@ -1,4 +1,10 @@
-import { ChromeMessage, MessageResponse, MessageTypes } from "../types";
+import {
+  ChromeMessage,
+  ChromeMessageExecute,
+  MessageResponse,
+  MessageTypes,
+} from "../types";
+import { say } from "cowsay";
 const messagesFromReactAppListener = (
   message: ChromeMessage,
   sender: chrome.runtime.MessageSender,
@@ -6,7 +12,39 @@ const messagesFromReactAppListener = (
 ) => {
   switch (message.type) {
     case MessageTypes.execute:
-      console.log("Executed");
+      const { text } = message as ChromeMessageExecute;
+      const newText = say({
+        text: text,
+        e: "oO",
+        T: "U ",
+      });
+      const images = document.querySelectorAll("img");
+
+      [...images].forEach((node) => {
+        const p = document.createElement("p");
+        p.innerHTML = newText;
+        p.style.whiteSpace = "pre";
+        node.replaceWith(p);
+      });
+      chrome.storage.sync.set({ mooText: text });
+      break;
+    case MessageTypes.shortcutExecute:
+      chrome.storage.sync.get("mooText").then((obj) => {
+        const text = Object.values(obj)[0];
+        const newText = say({
+          text: text,
+          e: "oO",
+          T: "U ",
+        });
+        const images = document.querySelectorAll("img");
+
+        [...images].forEach((node) => {
+          const p = document.createElement("p");
+          p.innerHTML = newText;
+          p.style.whiteSpace = "pre";
+          node.replaceWith(p);
+        });
+      });
       break;
   }
 };

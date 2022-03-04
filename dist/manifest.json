@@ -22,7 +22,7 @@
         "default": "Ctrl+Shift+Y",
         "mac": "Command+MacCtrl+Y"
       },
-      "description": "Run \"profile 1\" on the current page."
+      "description": "Run execute on the current page."
     }
   }
 }
